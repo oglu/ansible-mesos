@@ -1,6 +1,6 @@
 # {{ansible_managed}}
 
-export MESOS_MASTER="{{ mesos_zookeeper_masters }}"
+export MESOS_MASTER="zk://{% for s in groups['zookeepers'] %}{{s}}:{{zookeeper_client_port}}{% if not loop.last %},{%endif%}{% endfor %}/mesos"
 export MESOS_CONTAINERIZERS="{{ mesos_containerizers }}"
 export MESOS_EXECUTOR_REGISTRATION_TIMEOUT="{{ mesos_executor_timeout }}"
 export MESOS_PORT="{{ mesos_slave_port }}"
